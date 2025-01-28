@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="static\header.css">
+    <link rel="stylesheet" href="static\selector.css">
+    <script src="static\selector.js"></script>
+    <title>Selector</title>
+</head>
+<body>
+    <nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="/meets-subj1">Консультации</a></li>
+            <li>
+                <a href="/subjects" class="desktop-item">Предметы</a>
+            </li>
+            <li><a href="/faq">FAQ</a></li>
+
+            <li><a href="/notifications">Уведомления</a></li>
+            <li><a href="/test-selector">Тесты</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+            <li>
+                <div class="Log"><a href="/index">Вход</a></div>
+            </li>
+            <li>
+                <div class="Sign"><a href="/register">Регистрация</a></div>
+            </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <li>
+                <div><a href="/logout">Выход</a></div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+    <div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        <a href="/test-selector">Тесты</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+</div>
+    <div class="subjects">
+    <div class="subject" data-course="math">Математика
+        <div class="classes">
+            <a data-class="5">5 класс</a>
+            <a data-class="6">6 класс</a>
+            <a data-class="7">7 класс</a>
+            <a data-class="8">8 класс</a>
+            <a data-class="9">9 класс</a>
+        </div>
+    </div>
+    <div class="subject" data-course="english">Английский
+        <div class="classes">
+            <a data-class="5">5 класс</a>
+            <a data-class="6">6 класс</a>
+            <a data-class="7">7 класс</a>
+            <a data-class="8">8 класс</a>
+            <a data-class="9">9 класс</a>
+        </div>
+    </div>
+    <div class="subject" data-course="physics">Физика
+        <div class="classes">
+            <a data-class="5">5 класс</a>
+            <a data-class="6">6 класс</a>
+            <a data-class="7">7 класс</a>
+            <a data-class="8">8 класс</a>
+            <a data-class="9">9 класс</a>
+        </div>
+    </div>
+    <div class="subject" data-course="chemistry">Химия
+        <div class="classes">
+            <a data-class="5">5 класс</a>
+            <a data-class="6">6 класс</a>
+            <a data-class="7">7 класс</a>
+            <a data-class="8">8 класс</a>
+            <a data-class="9">9 класс</a>
+        </div>
+    </div>
+    <div class="subject" data-course="informatics">Информатика
+        <div class="classes">
+            <a data-class="5">5 класс</a>
+            <a data-class="6">6 класс</a>
+            <a data-class="7">7 класс</a>
+            <a data-class="8">8 класс</a>
+            <a data-class="9">9 класс</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.classes a').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); // Предотвращаем стандартное действие по клику
+
+            // Получаем название курса и класс
+            const course = this.closest('.subject').dataset.course;
+            const classNumber = this.dataset['class'];
+
+            // Формируем новый URL в формате /tests/<subject>/<class_name>
+            const newUrl = `${window.location.origin}/tests/${course}/${classNumber}`;
+
+            // Обновляем адресную строку без перезагрузки страницы
+            history.pushState(null, '', newUrl);
+            location.reload();
+        });
+    });
+</script>
+
+</body>
+</html>

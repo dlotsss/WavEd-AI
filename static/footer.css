@@ -1,0 +1,64 @@
+footer{
+    background-color: #56cbe3;
+    display: flex;
+    flex-direction: column;
+    padding: 1% 5% 0 5%;
+}
+
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.logo a{
+    text-decoration: none;
+    color: #111;
+    font-size: 20px;
+}
+
+.contacts{
+    display: flex;
+    gap: 10px;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.contacts a{
+    text-decoration: none;
+    color: #111;
+}
+
+.additional{
+    display: flex;
+    justify-content: space-between;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.partners{
+
+}
+
+.titles{
+    margin: 0 0 0 29%;
+}
+
+.policy{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.policy a{
+    width: fit-content;
+    text-decoration: none;
+    color: #111;
+}

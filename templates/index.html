@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static\style.css">
+</head>
+
+
+<body>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning" role="alert">
+    <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="container" id="container">
+    <div class="form-container sign-in">
+        <form method="post" action="/index">
+            <h1>Вход в аккаунт</h1>
+            <span>Введите почту</span>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <a href="main.html">Забыли пароль?</a>
+            <button type="submit">Вход</button>
+            <span><a href="register">Новенькие на платформе? Зарегистрироваться</a></span>
+        </form>
+    </div>
+
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-right">
+                <h1>Добро пожаловать!</h1>
+                <p>Зарегистрируйтесь, чтобы пользоваться всеми функциями сайта</p>
+                <a href="register">
+                    <button class="hidden" id="register">Зарегистрироваться</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>

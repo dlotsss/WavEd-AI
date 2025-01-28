@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\new.css">
+    <link rel="stylesheet" href="static\header.css">
+    <title>Document</title>
+  <script async data-id="3887519629" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+</head>  
+  <body>
+    <nav>
+      <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+          <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+          <li><a href="/meets-subj1">Консультации</a></li>
+          <li>
+            <a href="/subjects" class="desktop-item">Предметы</a>
+          </li>
+          <li><a href="/faq">FAQ</a></li>
+  
+          <li><a href="/notifications">Уведомления</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+        <li><div class="Log"><a href="/index">Вход</a></div></li>
+        <li><div class="Sign"><a href="/register">Регистрация</a></div></li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+              <li><div><a href="/logout">Выход</a></div></li>
+            {% endif %}
+        </ul>
+      </div>
+    </nav>
+  
+    <div class="sec-center">
+      <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+      <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+      <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="container">
+    <h1>Выберите вариант, который вам подходит!</h1>
+    <br>
+
+    <div class="pricing">
+      <div class="plan">
+        <div class="price">Бесплатно</div>
+        <ul class="features">
+          <li><i class="fas fa-check-circle"></i> Текстовый материал</li>
+          <li><i class="fas fa-check-circle"></i> Видеоконтент</li>
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p></p>
+        <br>
+        <button>Продолжить</button>
+      </div>
+      <div class="plan popular">
+        <div class="price">10000₸/месяц</div>
+        <ul class="features">
+          <li><i class="fas fa-check-circle"></i> Текстовый материал</li>
+          <li><i class="fas fa-check-circle"></i> Видеоконтент</li>
+          <li><i class="fas fa-check-circle"></i> Вопрос-ответ</li>
+          <li><i class="fas fa-check-circle"></i> Индивидуальные занятия</li>
+          <li><i class="fas fa-check-circle"></i> Еще какая-то фича</li>
+        </ul>
+        <br>
+        <p></p>
+        <button>Попробовать подписку</button>
+      </div>
+      <div class="plan">
+        <h2>Специально для вас!</h2>
+        <div class="price">Скидка 80%</div>
+        <div class="price">2000₸/месяц</div>
+        <ul class="features">
+          <li><i class="fas fa-check-circle"></i> Текстовый материал</li>
+          <li><i class="fas fa-check-circle"></i> Видеоконтент</li>
+          <li><i class="fas fa-check-circle"></i> Вопрос-ответ</li>
+          <li><i class="fas fa-check-circle"></i> Индивидуальные занятия</li>
+          <li><i class="fas fa-check-circle"></i> Еще какая-то фича</li>
+        </ul>
+        <button>Попробовать подписку</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

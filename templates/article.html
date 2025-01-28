@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Article</title>
+    <link rel="stylesheet" href="..\..\static\article.css">
+    <link rel="stylesheet" href="..\..\static\header.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script> window.chtlConfig = { chatbotId: "3887519629" } </script>
+    <script async data-id="3887519629" id="chatling-embed-script" type="text/javascript"
+            src="https://chatling.ai/js/embed.js"></script>
+    <script type="text/javascript" src="https://www.hostmath.com/Math/MathJax.js?config=OK"></script>
+
+    <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+    <script>
+   // MathJax Configuration
+   window.MathJax = {
+       tex: {
+           inlineMath: [['$', '$'], ['\\(', '\\)']]
+       },
+       loader: {
+           load: ['input/tex', 'output/chtml']
+       }
+   };
+
+
+    </script>
+
+    <!-- Include MathJax -->
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            var initialCourseId = $(".side-menu li:first-child a").attr("href");
+            updateContent(initialCourseId);
+
+            $(".side-menu a").click(function (event) {
+                event.preventDefault();
+                var courseId = $(this).attr("href");
+                updateContent(courseId);
+            });
+
+            function updateContent(courseId) {
+                $.ajax({
+                    url: "/get_course_content/" + courseId,
+                    type: "GET",
+                    success: function (data) {
+                        $("#course-title").text(data.title);
+
+                        var descriptionHtml = "";
+                        $.each(data.description, function (index, value) {
+                            if (value.startsWith("<")) {
+
+                                var imageId = value.substring(1, value.length - 1);
+                                console.log(imageId)
+                                descriptionHtml += '<' + imageId + '>';
+                            }
+                            else if (value.startsWith("$")){
+                                var contentD = value.substring(1, value.length-1);
+
+                                descriptionHtml += '<' + contentD + '>'
+                                console.log(descriptionHtml)
+                            }
+                            else if (value.startsWith("|")){
+                                var contentB = value.substring(1, value.length-1);
+                                descriptionHtml += '<' + contentB + '>'
+                                console.log(descriptionHtml)
+                            }
+                            else{
+                            descriptionHtml += "<p>" + value + "</p>"}
+
+
+                        });
+                        console.log("1")
+                        $("#course-description").html(descriptionHtml);
+
+
+                                if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+            MathJax.typesetPromise(["#course-description"]).then(function () {
+                console.log('MathJax processing complete');
+            }).catch(function (err) {
+                console.log('MathJax processing failed: ' + err.message);
+            });
+        } else {
+            console.log('MathJax is not loaded yet');
+        }
+                },
+                error: function () {
+                    console.log("Error retrieving course content");
+                }
+                });
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+<nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="/meets-subj1">Консультации</a></li>
+            <li>
+                <a href="/subjects" class="desktop-item">Предметы</a>
+            </li>
+            <li><a href="/faq">FAQ</a></li>
+
+            <li><a href="/notifications">Уведомления</a></li>
+            <li><a href="/test-selector">Тесты</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+            <li>
+                <div class="Log"><a href="/index">Вход</a></div>
+            </li>
+            <li>
+                <div class="Sign"><a href="/register">Регистрация</a></div>
+            </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <li>
+                <div><a href="/logout">Выход</a></div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        <a href="/test-selector">Тесты</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+</div>
+
+
+<br>
+
+<br>
+<div class="whole">
+    <div class="sidebar">
+        <div class="side-text">
+
+            <h2>{{subject.name}}</h2>
+            <h3>{{subject.class_id+4}} КЛАСС</h3>
+        </div>
+        <ul class="side-menu">
+            {% for course in courses %}
+            <li><a href="{{ course.id }}">{{ course.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-text">
+                <h2 id="course-title"></h2>
+            </div>
+        </div>
+        <div class="main-text">
+            <div id="course-description"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

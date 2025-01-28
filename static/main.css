@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/*------------------------------ BODY ----------------------------*/
+body{
+  color: #021024;
+  font-size: 20px;
+  font-weight: 400;
+}
+h2{
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+  word-break: break-word;
+}
+/* ----Intro---- */
+.intro{
+  padding: 80px 0;
+  box-sizing: border-box;  
+  background-color: #bce6ee;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.intro2{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.descript{
+  flex-wrap: wrap;
+  margin: 0 25%;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+.descript h1{
+  font-weight: 800;
+  font-size: 70px;
+  word-break: break-word;
+}
+.wave{
+  position: relative;
+  left: 50%;
+  width: 160px;
+  height: 19px;
+  background-image: url(waved.png);
+  background-size: cover;
+  color: #021024;
+}
+.work-examples-btns{
+  gap: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.work-examples-btn{
+  text-align: center;
+  font-size: 20px;
+  text-justify: inherit;
+  width: 204px;
+  height: 90px;
+  padding: 1%;
+  cursor: pointer;
+  border-radius: 33px;
+  border: 3px solid #021024;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  margin-bottom: 20px;
+  color: #021024;
+}
+.work-examples-btn:hover{
+  background-color: #021024;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.actions{
+  text-align: center;
+  margin: auto;
+  max-width: 50%;
+}
+
+/* ----Teachers---- */
+
+#teachers {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 20px;
+}
+.teacher-card {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(2, 16, 36, 1);
+  margin: 10px;
+  padding: 20px;
+  width: 300px;
+}
+.round-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.teacher-card h2 {
+  margin: 10px 0;
+  font-size: 20px;
+}
+.teacher-card p {
+  color: #777;
+}
+.rating .star {
+  font-size: 2em;
+}
+.rating .number {
+  font-size: 1.5em;
+  vertical-align: super;
+}
+
+/* ----Testimonials---- */
+#testimonials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width:100%;
+}
+.testimonial-heading {
+  letter-spacing: 1px;
+  margin: 30px 0px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.testimonial-heading h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  background-color: #021024;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 33px;
+  padding: 15px;
+}
+.testimonial-heading span {
+  font-size: 1.3rem;
+  color: #021024;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.testimonial-box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width:100%;
+}
+.testimonial-box {
+  width:500px;
+  box-shadow: 2px 2px 25px rgba(12, 116, 137, 1);
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 15px;
+  cursor: pointer;
+}
+
+/* ----Companies---- */
+.company-container {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.company-list {
+  list-style-type: none; 
+  padding: 0;
+}
+.company-list li {
+  display: inline-block;
+  margin: 10px;
+}
+.company-list li a {
+  text-decoration: none;
+  color: black;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+/* ----Login---- */
+.login-container{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login-btn{
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  max-width: 320px;
+  min-width: 200px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 33px;
+  border: 3px solid #021024;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-btn a{
+  text-decoration: none;
+  color: #021024;
+}
+.login-btn:hover{
+  background-color: #021024;
+  transition: all 0.2s ease;
+}
+.login-btn:hover a{
+  text-decoration: none;
+  color: #fff;
+}
+
+/* ----FAQ---- */
+.faq{
+  width: 60%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+details {
+  color:#021024;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(2, 16, 36, 1);
+}
+ summary {
+  color:#021024;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+}
+ summary::before {
+  color: #ccc;
+}
+
+/* ----MEDIA---- */
+@media screen and (max-width: 1060px) {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  .intro .intro2 .descript{
+    margin: 0 2%;
+    margin-bottom: 5rem;
+  }
+  .descript h1{
+    font-size: 43.75px;
+  }
+  .actions{
+    max-width: 98%;
+  }
+  body{
+    background-color: #bce6ee;
+  }
+  .chitai{
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .work-examples-btns{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+ /* details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#021024;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(2, 16, 36, 1);
+ }
+ 
+ summary {
+  color:#021024;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+ 
+ summary::before {
+  color: #ccc;
+ } */
+ 

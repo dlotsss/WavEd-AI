@@ -1,0 +1,180 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	
++++ b/main.py	(date 1707750345391)
+@@ -1,17 +1,25 @@
+ from flask import Flask, render_template, request, redirect, flash, jsonify
+ from flask_sqlalchemy import SQLAlchemy
++from sqlalchemy import create_engine
+ from datetime import datetime
+ from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+ from forms import LoginForm, RegistrationForm
+ from werkzeug.security import generate_password_hash, check_password_hash
+ from flask_mail import Mail, Message
++import pymysql
++from random import randrange, randint
++
++pymysql.install_as_MySQLdb()
+ import json
+ 
++
++pymysql.install_as_MySQLdb()
+ app = Flask(__name__)
+ app.app_context().push()
+ app.config['SECRET_KEY'] = 'a really really really really long secret key'
+-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:D44gheD-FFfA1h6Fbg4aGdd-EHhg-a4H@monorail.proxy.rlwy.net:20474/railway'
++app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/meets.db'
+ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
++engine = create_engine("sqlite:///instance/meets.db")
+ db = SQLAlchemy(app)
+ mail = Mail(app)
+ 
+@@ -25,23 +33,19 @@
+ 
+ 
+ class User(db.Model, UserMixin):
+-    id = db.Column(db.Integer)
+-    email = db.Column(db.String(50), nullable=False, unique=True, primary_key=True)
++    id = db.Column(db.Integer, primary_key=True)
++    email = db.Column(db.String(50), nullable=False, unique=True)
+     password_hash = db.Column(db.String(128), nullable=False)
+     login = db.Column(db.String(30), nullable=False, unique=True)
+ 
+     def set_password(self, password):
+-        self.password_hash = generate_password_hash(password)[0:15]
++        self.password_hash = generate_password_hash(password)
+ 
+     def check_password(self, password):
+-        print(generate_password_hash(password)[0:15])
+-        print(self.password_hash)
+-        if(generate_password_hash(password)[0:15]==self.password_hash):
+-            return True
+-        return False
++        return check_password_hash(self.password_hash, password)
+ 
+ 
+-class Usee(db.Model):
++class usee(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     quote = db.Column(db.String(300), nullable=False)
+     topic = db.Column(db.String(100), nullable=False)
+@@ -53,7 +57,7 @@
+     email = db.Column(db.String(300))
+ 
+     def __repr__(self):
+-        return '<Usee %r>' % self.id
++        return '<usee %r>' % self.id
+ 
+ 
+ class Class(db.Model):
+@@ -75,6 +79,13 @@
+     description = db.Column(db.Text, nullable=False)
+     subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=False)
+ 
++class Image(db.Model):
++    id = db.Column(db.Integer, primary_key=True)
++    filename = db.Column(db.String(100), nullable=False)
++    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
++
++    def __repr__(self):
++        return f"Image('{self.filename}')"
+ 
+ @app.route("/index", methods=['GET', 'POST'])
+ def index():
+@@ -97,7 +108,8 @@
+         try:
+             user = User(email=form.email.data, login=form.login.data)
+             user.set_password(form.password.data)
+-
++            user.id = randint(1, 100000000)
++            
+             db.session.add(user)
+             db.session.commit()
+ 
+@@ -126,8 +138,9 @@
+ 
+ 
+ @app.route('/notifications')
++@login_required
+ def notifications():
+-    use = Usee.query.order_by(Usee.date.desc()).all()
++    use = usee.query.order_by(usee.date.desc()).all()
+     return render_template('notifications.html', use=use)
+ 
+ 
+@@ -148,10 +161,35 @@
+ @app.route('/get_course_content/<int:course_id>', methods=['GET'])
+ def get_course_content(course_id):
+     course = Course.query.get_or_404(course_id)
++    description = course.description.split("/n")
++    images = Image.query.filter_by(course_id=course_id).all()
++    image_ids = [image.id for image in images]
++    print(image_ids)
++    for i, line in enumerate(description):
++        while "<" in line and ">" in line:
++            start_index = line.find("<")
++            end_index = line.find(">")
++            if start_index != -1 and end_index != -1:
++                image_id_str = line[start_index + 1:end_index]
++
++                if image_id_str.isdigit():
++                    image_id = int(image_id_str)
++                    if image_id in image_ids:
++                        image_filename = Image.query.get(image_id).filename
++                        line = line.replace(f"<{image_id_str}>", f"<img src='../../static/{image_filename}' alt='Image'>")
++                        print(line)
++                        description[i] = line
++                    else:
++                        line = line.replace(f"<{image_id_str}>", "")
++                        print(1)
++                else:
++                    print(type(image_id_str))
++                    line = line.replace(f"<{image_id_str}>", "")
+     content = {
+         'title': course.title,
+-        'description': course.description.split("/n")
++        'description': description
+     }
++    print(description)
+     return jsonify(content)
+ 
+ 
+@@ -163,7 +201,7 @@
+ 
+         meet_id = request.form.get('meet_id')
+ 
+-        meet_record = Usee.query.get(meet_id)
++        meet_record = usee.query.get(meet_id)
+ 
+         if meet_record:
+             meet_record.link = link
+@@ -211,7 +249,7 @@
+         except:
+             return "При добавлении ссылки произошла ошибка"
+     else:
+-        questions = Usee.query.order_by(Usee.date.desc()).all()
++        questions = usee.query.order_by(usee.date.desc()).all()
+         return render_template('meets.html', questions=questions)
+ 
+ 
+@@ -243,13 +281,15 @@
+         possible_day = list(possible_days)
+         possible_days = ""
+         possible_day[10] = " "
++        print(current_user.email)
+         constant_user = User.query.filter_by(id=current_user.email).first()
++        print(constant_user)
+         email = constant_user.email
+         for i in possible_day:
+             possible_days = possible_days + i
+         clas = request.form['class']
+ 
+-        use = Usee(quote=quote, topic=topic, possible_days=possible_days, clas=clas, confirmed=0, email=email)
++        use = usee(quote=quote, topic=topic, possible_days=possible_days, clas=clas, confirmed=0, email=email)
+         try:
+             db.session.add(use)
+             db.session.commit()

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static\meets.css">
+    <link rel="stylesheet" href="static\header.css">
+    <script src="static\meet.js"></script>
+    <script> window.chtlConfig = { chatbotId: "3887519629" } </script>
+    <script async data-id="3887519629" id="chatling-embed-script" type="text/javascript"
+            src="https://chatling.ai/js/embed.js"></script>
+</head>
+
+<body>
+<nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="/meets-subj1">Консультации</a></li>
+            <li>
+                <a href="/subjects" class="desktop-item">Предметы</a>
+            </li>
+            <li><a href="/faq">FAQ</a></li>
+
+            <li><a href="/notifications">Уведомления</a></li>
+            <li><a href="/test-selector">Тесты</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+            <li>
+                <div class="Log"><a href="/index">Вход</a></div>
+            </li>
+            <li>
+                <div class="Sign"><a href="/register">Регистрация</a></div>
+            </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <li>
+                <div><a href="/logout">Выход</a></div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        <a href="/test-selector">Тесты</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="meets">
+        {% for el in questions%}
+        {% if el.confirmed == 0 %}
+        <div class="meet-box">
+            <h2>{{ el.topic }}</h2>
+            <div class="clasDate">
+                <h3>{{ el.clas }}</h3>
+                <span>{{ el.date.date() }}</span>
+            </div>
+            <h2>{{ el.possible_days }}</h2>
+            <blockquote>{{ el.quote }}</blockquote>
+            {% if current_user.teacher==1%}
+            <button class="btn-get" onclick="toggle(hidden_content, {{ el.id }})" id="{{ el.id }}">Принять</button>
+            {% endif %}
+        </div>
+        {%endif%}
+        {% endfor %}
+    </div>
+    <a href="/meet-create" class="cr">Создать запрос</a>
+</div>
+<div class="modal" style="display:none;" id="hidden_content">
+    <a class="close" onclick="toggle(hidden_content, window.btn_id)"><h2>X</h2></a>
+    <h1 style="text-align: center;">Введите адрес ссылки собрания zoom</h1>
+    <form onsubmit="submitLink(); return false;" class="linkk">
+        <input type="text" name="form-link" id="form-link" class="form-link">
+
+        <input type="submit" value="Отправить ссылку">
+
+    </form>
+</div>
+
+</body>
+</html>

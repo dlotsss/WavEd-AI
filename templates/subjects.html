@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static\subjects.css">
+    <link rel="stylesheet" href="static\header.css">
+  <script> window.chtlConfig = { chatbotId: "3887519629" } </script>
+<script async data-id="3887519629" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+</head>
+<body>
+<nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="/meets-subj1">Консультации</a></li>
+            <li>
+                <a href="/subjects" class="desktop-item">Предметы</a>
+            </li>
+            <li><a href="/faq">FAQ</a></li>
+
+            <li><a href="/notifications">Уведомления</a></li>
+            <li><a href="/test-selector">Тесты</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+            <li>
+                <div class="Log"><a href="/index">Вход</a></div>
+            </li>
+            <li>
+                <div class="Sign"><a href="/register">Регистрация</a></div>
+            </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <li>
+                <div><a href="/logout">Выход</a></div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        <a href="/test-selector">Тесты</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+</div>
+
+
+  <div class="con">
+    <h1>Выберите класс</h1>
+    <div class="subject-col">
+
+  {% for class_info in classes %}
+    <p><a href="{{ url_for('class_subjects', class_id=class_info.id) }}">{{ class_info.name }}</a></p>
+  {% endfor %}
+
+    </div>
+  </div>
+</body>
+</html>

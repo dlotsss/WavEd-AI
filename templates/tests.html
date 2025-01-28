@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="..\..\static\header.css">
+    <link rel="stylesheet" href="..\..\static\selector.css">
+    <title>Document</title>
+</head>
+<body>
+<nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="/meets-subj1">Консультации</a></li>
+            <li>
+                <a href="/subjects" class="desktop-item">Предметы</a>
+            </li>
+            <li><a href="/faq">FAQ</a></li>
+
+            <li><a href="/notifications">Уведомления</a></li>
+            <li><a href="/test-selector">Тесты</a></li>
+        </ul>
+        <ul class="nav-links">
+            {% if not(current_user.is_authenticated) %}
+            <li>
+                <div class="Log"><a href="/index">Вход</a></div>
+            </li>
+            <li>
+                <div class="Sign"><a href="/register">Регистрация</a></div>
+            </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <li>
+                <div><a href="/logout">Выход</a></div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+        <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+        <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+        <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+        <a href="/faq">FAQ</a>
+        <a href="/notifications">Уведомления</a>
+        <a href="/test-selector">Тесты</a>
+        {% if not(current_user.is_authenticated) %}
+        <a href="/index">Вход</a>
+        <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+</div>
+<!--<div id="question-container">
+    <h1 id="question1">{{ question[0] }}</h1>
+    <div id="answers1">
+        <button class="answer-btn" data-answer="А">{{ question[1][0][2:]}}</button>
+        <button class="answer-btn" data-answer="Б">{{ question[1][1][2:]}}</button>
+        <button class="answer-btn" data-answer="В">{{ question[1][2][2:]}}</button>
+        <button class="answer-btn" data-answer="Г">{{ question[1][3][2:]}}</button>
+    </div>
+</div>-->
+
+<div class="testContainer" id="testContainer">
+    <div class="unnec">
+        <div class="upperBar">
+            <div class="headerTest">
+        <span class="subjectHead">
+            {{subject}}
+        </span>
+                <span class="numberClass">
+                {{class_name}}
+        </span>
+            </div>
+
+            <span class="total" id="total">Прогресс: 0/0</span>
+
+        </div>
+
+
+        <div class="questionBody">
+            <h3 class="quest" id="question">
+                {{ question[0] }}
+            </h3>
+            <div class="answers" id="answers">
+                <button class="answer-btn" data-answer="А">{{ question[1][0][2:]}}</button>
+                <button class="answer-btn" data-answer="Б">{{ question[1][1][2:]}}</button>
+                <button class="answer-btn" data-answer="В">{{ question[1][2][2:]}}</button>
+                <button class="answer-btn" data-answer="Г">{{ question[1][3][2:]}}</button>
+            </div>
+            <div class="buttonsField">
+                <button class="close" id="close">ЗАВЕРШИТЬ</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="results" id="results">
+    <h3 class="resText" id="diff"></h3>
+    <h3 class="resText" id="totalRes"></h3>
+</div>
+
+<script>
+
+
+
+        close = document.getElementById('close');
+        close.addEventListener('click', function() {
+
+            cont = document.getElementById('testContainer');
+            result = document.getElementById('results');
+
+            cont.style.display = 'none';
+            result.style.display = 'flex'; })
+        document.querySelectorAll('.answer-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedAnswer = this.dataset.answer;
+
+                // Отправляем выбранный ответ через AJAX
+                fetch(window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ selected_answer: selectedAnswer })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Обновляем вопрос и варианты ответов на странице
+                    document.getElementById('question').textContent = data.question;
+                    const answerButtons = document.querySelectorAll('.answer-btn');
+
+                    answerButtons[0].textContent = `А: ${data.answers[1].slice(3)}`;
+                    answerButtons[1].textContent = `Б: ${data.answers[2].slice(3)}`;
+                    answerButtons[2].textContent = `В: ${data.answers[3].slice(3)}`;
+                    answerButtons[3].textContent = `Г: ${data.answers[4].slice(3)}`;
+
+
+                    document.getElementById('diff').textContent = `Итоговая сложность ${data.difficulty.slice(0, -1)} \\ 100`;
+                    document.getElementById('totalRes').textContent = `Результат: ${data.progress}`;
+
+        }
+
+                    document.getElementById("results").style.display = 'none';
+
+                    // Выводим информацию о прогрессе
+                    console.log(`Текущий прогресс: ${data.progress}`);
+                    document.getElementById('total').textContent = "Прогресс: " + data.progress;
+                });
+            });
+
+        });
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

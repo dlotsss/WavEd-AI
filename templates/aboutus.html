@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="static\aboutus.css">
+    <link rel="stylesheet" href="static\header.css">
+    <script src="static\carousel.js"></script>
+    <script async data-id="3887519629" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+  <nav>
+    <div class="wrapper">
+      <div class="logo"><a href="/"><img src="..\..\static\logo.png" alt=""></a></div>
+      <ul class="nav-links">
+        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+        <li><a href="/meets-subj1">Консультации</a></li>
+        <li>
+          <a href="/subjects" class="desktop-item">Предметы</a>
+        </li>
+        <li><a href="/faq">FAQ</a></li>
+
+        <li><a href="/notifications">Уведомления</a></li>
+      </ul>
+      <ul class="nav-links">
+          {% if not(current_user.is_authenticated) %}
+      <li><div class="Log"><a href="/index">Вход</a></div></li>
+      <li><div class="Sign"><a href="/register">Регистрация</a></div></li>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+            <li><div><a href="/logout">Выход</a></div></li>
+          {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="sec-center">
+    <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+    <label class="for-dropdown" for="dropdown">Меню<i class="uil uil-arrow-down"></i></label>
+    <div class="section-dropdown">
+      <a href="/main">Главная <i class="uil uil-arrow-right"></i></a>
+      <a href="/meets-subj1">Консультации <i class="uil uil-arrow-right"></i></a>
+      <a href="/subjects">Предметы<i class="uil uil-arrow-right"></i></a>
+      <a href="/faq">FAQ</a>
+      <a href="/notifications">Уведомления</a>
+      {% if not(current_user.is_authenticated) %}
+      <a href="/index">Вход</a>
+      <a href="/register">Регистрация</a>
+      {% endif %}
+      {% if current_user.is_authenticated %}
+      <a href="/logout">Выход</a>
+      {% endif %}
+    </div>
+  </div>
+
+<div class="container">
+<br>
+<br>
+<br>
+<div class="general">
+    <div class="logo">
+        <img src="static\waved.png" alt="WavEd" class="waved_photo">
+    </div>
+    <div class="slogan">
+        <h1>Окунись в мир знаний!</h1>
+    </div>
+</div>
+<div class="preview">
+    <div class="team">
+        <img src="static\pic_car1.png" alt="TeamPhoto" class="photo">
+    </div>
+    <div class="description">
+        <h1>Кто мы?</h1>
+        <h2>teen.cor <span>- Команда энтузиастов, нацеленная на улучшение образования</span></h2>
+        <h2>WavEd<span> - уникальный проект, предоставляющий ученикам качественное обучение, используя индивидуальные консультации с преподавателями, чей возраст близок к возрасту учеников,
+        способствуя обучению на одной волне с главной целью стереть границы между учителем и учеником, являющиеся серьезным препятствием в процессе обучения.</span></h2>
+    </div>
+</div>
+<div class="principles">
+    <h1>Принципы нашей команды:</h1>
+    <div class="availability">
+        <h1>Доступность</h1>
+        <p>Платформа обеспечивает легкий доступ к образовательным ресурсам с 5 по 9 классы общеобразовательных программ для учеников из сельских школ, с удобным интерфейсом и минимальными техническими барьерами.</p>
+    </div>
+    <div class="reliability">
+        <h1>Надежность</h1>
+        <p>Учителя проходят тщательные проверки трижды(тестирования, консультация, внеплановая проверка от модераторов) также имеют рейтинг, формируемый на основе обратной связи от учеников. Это обеспечивает высокий стандарт образования и доверие со стороны пользователей.</p>
+    </div>
+    <div class="uniqness">
+        <h1>Уникальность</h1>
+        <p>Платформа предоставляет уникальную возможность для учеников получать качественные консультации по доступным ценам. Для учителей это становится источником устойчивого трудоустройства, гарантированное получение сертификата за волонтерскую деятельность , способствуя развитию образовательной среды в подростковом возрасте.</p>
+    </div>
+</div>
+<div class="partners">
+    <div class="we">
+    <h1>Мы сотрудничаем с:</h1>
+    <ul>
+        <li><a href="">НИШ ХБН г.Караганды</a></li>
+        <li><a href="">Волонтерская организация 1</a></li>
+        <li><a href="">Волонтерская организация 2</a></li>
+    </ul>
+</div>
+</div>
+
+<div class="slideshow-container">
+
+  <div class="pic">
+      <div class="numbertext">1/3</div>
+      <img src="static\pic_car2.png" alt="smth" style="width: 75%">
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 3</div>
+    <img src="static\pic_car2.png" style="width:75%">
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 3</div>
+    <img src="static\pic_car3.png" style="width:75%">
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 3</div>
+    <img src="static\pic_car4.png" style="width:75%">
+  </div>
+
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+    </div>
+</body>
+</html>
