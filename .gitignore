@@ -1,11 +1,5 @@
-# Ignore all HTML files
+# Ignore all HTML and CSS files
 *.html
-
-# Ignore specific HTML files
-index.html
-public/*.html
-
-# Optional: Ignore compiled CSS if using JavaScript-based styling
 *.css
 *.scss
 *.sass
